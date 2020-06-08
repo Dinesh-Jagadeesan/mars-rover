@@ -1,0 +1,29 @@
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let photo"> {{photo.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="sol">
+        <mat-header-cell *matHeaderCellDef>Sol</mat-header-cell>
+        <mat-cell *matCellDef="let photo"> {{photo.sol}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="earth_date">
+        <mat-header-cell *matHeaderCellDef>Earth date</mat-header-cell>
+        <mat-cell *matCellDef="let photo"> {{photo.earth_date}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="camera_id">
+        <mat-header-cell *matHeaderCellDef>Camera ID</mat-header-cell>
+        <mat-cell *matCellDef="let photo"> {{photo.camera.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="camera_name">
+        <mat-header-cell *matHeaderCellDef>Camera name</mat-header-cell>
+        <mat-cell *matCellDef="let photo"> {{photo.camera.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="img_src">
+        <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
+        <mat-cell *matCellDef="let photo"><a [href]="photo.img_src" target="_blank" class="text-truncate">{{photo.img_src}}</a> </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="photoColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: photoColumns;"></mat-row>
+</mat-table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

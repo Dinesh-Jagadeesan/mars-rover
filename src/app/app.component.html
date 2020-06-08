@@ -1,0 +1,88 @@
+<mat-toolbar color="primary">
+  <span class="display-4">Mars Rover</span>
+</mat-toolbar>
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="mode == 'indeterminate'"></mat-progress-bar>
+<div class="container-xl container-lg container-md container-sm mt-5">
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+      <p class="h6">Querying by Martian sol / Earth date</p>
+      <mat-slide-toggle color="primary" [(ngModel)]="marsRover.queryBySol" required name="queryBySol" id="queryBySol">
+        {{marsRover.queryBySol ? "Sol" : "Earth date"}}</mat-slide-toggle>
+    </div>
+  </div>
+  <form #marsRoverForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="mt-5 row">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+        <div *ngIf="marsRover.queryBySol">
+          <mat-form-field class="w-100">
+            <mat-label>Sol</mat-label>
+            <input type="number" matInput id="sol" name="sol" required [(ngModel)]="marsRover.sol">
+            <button *ngIf="marsRover.sol != 0" matSuffix mat-icon-button aria-label="Clear" (click)="marsRover.sol=0">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <mat-hint>Only numbers are allowed.</mat-hint>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!marsRover.queryBySol">
+          <mat-form-field color="primary" class="w-100">
+            <mat-label>Earth Date</mat-label>
+            <input matInput [max]="currentDate" [matDatepicker]="earthDate" id="earthDate" name="earthDate"
+              (dateChange)="formatEarthDate()" readonly [(ngModel)]="marsRover.earthDate" required>
+            <mat-datepicker-toggle matSuffix [for]="earthDate"></mat-datepicker-toggle>
+            <mat-datepicker #earthDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+        <mat-form-field class="w-100">
+          <mat-label>Rover</mat-label>
+          <mat-select [(value)]="marsRover.rover" name="rover" id="rover" required>
+            <mat-option [value]="rover.value" *ngFor="let rover of rovers">{{ rover.viewValue }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+        <mat-form-field class="w-100">
+          <mat-label>Api Key</mat-label>
+          <input matInput type="text" [(ngModel)]="marsRover.apiKey" id="apiKey" name="apiKey" required>
+          <button *ngIf="marsRover.apiKey" matSuffix mat-icon-button aria-label="Clear" (click)="marsRover.apiKey=null">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
+        <button type="submit" mat-raised-button color="primary" [disabled]="!marsRoverForm.form.valid || mode == 'indeterminate'">Submit</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <p class="text-xl-left text-lg-left text-md-left text-sm-left">
+          For more <a href="https://github.com/chrisccerami/mars-photo-api" target="_blank">info.</a>
+        </p>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="roverData != null && roverData.photos.length != 0">
+    <p class="h6">About <span class="text-capitalize">{{roverData.photos[0].rover.name}}</span></p>
+    <app-rover-details [roverDetails]="roverDetails"></app-rover-details>
+    <br>
+    <p class="h6">Availabe Cameras</p>
+    <app-rover-cameras [roverCameras]="roverCameras"></app-rover-cameras>
+    <br>
+    <p class="h6">Photos</p>
+    <app-rover-photos [roverPhotos]="roverPhotos"></app-rover-photos>
+  </div>
+  <div *ngIf="roverData != null && roverData.photos.length == 0">
+    <p class="text-xl-center text-lg-center text-md-center text-sm-center">
+      No data found.
+    </p>
+  </div>
+  <div *ngIf="serverError">
+      <p class="text-xl-center text-lg-center text-md-center text-sm-center">
+          {{ serverError }}
+      </p>
+    </div>
+</div>
+<router-outlet></router-outlet>

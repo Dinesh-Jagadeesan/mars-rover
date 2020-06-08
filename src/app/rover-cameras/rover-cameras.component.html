@@ -1,0 +1,12 @@
+<mat-table [dataSource]="roverCameras" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let camera"> {{camera.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="full_name">
+        <mat-header-cell *matHeaderCellDef>Full name</mat-header-cell>
+        <mat-cell *matCellDef="let camera"> {{camera.full_name}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="cameraColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: cameraColumns;"></mat-row>
+</mat-table>

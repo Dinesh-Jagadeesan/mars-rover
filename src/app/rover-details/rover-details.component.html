@@ -1,0 +1,36 @@
+<mat-table [dataSource]="roverDetails" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="launch_date">
+        <mat-header-cell *matHeaderCellDef>Launch date</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.launch_date}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="landing_date">
+        <mat-header-cell *matHeaderCellDef>Landing date</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.landing_date}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.status}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="max_sol">
+        <mat-header-cell *matHeaderCellDef>Maximum sol</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.max_sol}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="max_date">
+        <mat-header-cell *matHeaderCellDef>Maximum date</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.max_date}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="total_photos">
+        <mat-header-cell *matHeaderCellDef>Total photos</mat-header-cell>
+        <mat-cell *matCellDef="let rover"> {{rover.total_photos}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="roverColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: roverColumns;"></mat-row>
+</mat-table>
